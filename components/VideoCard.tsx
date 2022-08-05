@@ -4,7 +4,7 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
-import { BsFillPlayFill, BsFillPauseFill, BsPlay  } from 'react-icons/bs';
+import { BsFillPlayFill, BsFillPauseFill, BsPlay } from 'react-icons/bs';
 import { GoVerified } from 'react-icons/go';
 
 interface Iprops {
@@ -27,9 +27,15 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
     }
   };
 
+  useEffect(() => {
+    if(videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [isVideoMuted])
+
   return (
     <div className='flex flex-col border-b-2 border-gray-200 pb-6'>
-      <div className=''>
+      <div>
         <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
           <div className='md:w-16 md:h-16 w-10 h-10'>
             <Link href='/'>
@@ -70,12 +76,12 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
         className='lg:ml-20 flex gap-4 relative'
       >
         <div className='rounded-3xl'>
-          <Link href='/'>
+          <Link href={`/detail/${post._id}`}>
             <video
               src={post.video.asset.url}
               ref={videoRef}
               loop
-              className='lg:w[600px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer bg-gray-100'
+              className='lg:w-[600px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer bg-gray-100'
             >
 
             </video>
