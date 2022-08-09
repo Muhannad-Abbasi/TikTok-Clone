@@ -19,10 +19,10 @@ interface IProps {
 
 const Detail = ({ postDetails }: IProps) => {
   const [post, setPost] = useState(postDetails);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isVideoMuted, setIsVideoMuted] = useState(false)
-  const [comment, setComment] = useState('');
-  const [isPostingComment, setIsPostingComment] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isVideoMuted, setIsVideoMuted] = useState<boolean>(false)
+  const [comment, setComment] = useState<string>('');
+  const [isPostingComment, setIsPostingComment] = useState<boolean>(false);
 
   const { userProfile }: any = useAuthStore();
 
@@ -99,7 +99,7 @@ const Detail = ({ postDetails }: IProps) => {
 
             </video>
           </div>
-          <div className='absolute top-[45%] left-[40%] cursor-pointer'>
+          <div className='absolute top-[45%] left-[45%] cursor-pointer'>
             {!isPlaying && (
               <button
                 onClick={onVideoClick}
@@ -127,23 +127,21 @@ const Detail = ({ postDetails }: IProps) => {
           
           <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
             <div className='ml-4 md:w-20 md:h-20 w-16 h-16'>
-              <Link href='/'>
-                <>
-                  <Image 
-                    width={62}
-                    height={62}
-                    className='rounded-full'
-                    src={post.postedBy.image}
-                    alt='profile photo'
-                    layout='responsive'
-                  />
-                </>
+              <Link href={`/profile/${post.postedBy._id}`}>
+                <Image 
+                  width={62}
+                  height={62}
+                  className='rounded-full'
+                  src={post.postedBy.image}
+                  alt='profile photo'
+                  layout='responsive'
+                />
               </Link>
             </div>
             <div>
-              <Link href='/'>
+              <Link href={`/profile/${post.postedBy._id}`}>
                 <div className='flex flex-col gap-2 mt-3'>
-                  <p className='flex gap-2 items-center md:text-md font-bold text-primary'>
+                  <p className='flex gap-2 items-center md:text-md font-bold text-primary lowercase'>
                     {post.postedBy.userName}
                     {``}
                     <GoVerified
@@ -163,6 +161,7 @@ const Detail = ({ postDetails }: IProps) => {
           <div className='mt-10 px-10'>
             {userProfile && (
               <LikeButton
+                flex='flex'
                 likes={post.likes}
                 handleLike={() => handleLike(true)}
                 handleDislike={() => handleLike(false)}

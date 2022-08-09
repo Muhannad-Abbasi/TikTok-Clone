@@ -12,6 +12,7 @@ import { BASE_URL } from '../utils';
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [videoAsset, setVideoAsset] = useState<SanityAssetDocument | undefined>();
+  const [topic, setTopic] = useState<String>(topics[0].name);
   const [wrongFileType, setWrongFileType] = useState(false);
   const [caption, setCaption] = useState('');
   const [category, setCategory] = useState(topics[0].name);
@@ -69,6 +70,13 @@ const Upload = () => {
     router.push('/');
   };
 
+  const handleDiscard = () => {
+    setSavingPost(false);
+    setVideoAsset(undefined);
+    setCaption('');
+    setTopic('');
+  };
+
   return (
     <div className='flex w-full h-full aboslute left-0 top-[60px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center'>
       <div className='bg-white rounded-lg xl:h-[80vh] w-[60%] flex gap-6 flex-wrap justify-between items-center p-14 pt-6'>
@@ -88,7 +96,7 @@ const Upload = () => {
                       src={videoAsset.url}
                       loop
                       controls
-                      className='rounded-xl h-[450px] mt-16 bg-black'
+                      className='rounded-xl h-[450px] bg-black'
                     >
 
                     </video>
@@ -156,7 +164,7 @@ const Upload = () => {
           </select>
           <div className='flex gap-6 mt-10'>
             <button
-              onClick={() => {}}
+              onClick={handleDiscard}
               type='button'
               className='border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none'
             >

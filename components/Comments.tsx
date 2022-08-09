@@ -44,17 +44,17 @@ const Comments = ({ comment, setComment, addComment, comments, isPostingComment 
                       href={`/profile/${user._id}`}
                     >
                       <div className='flex items-start gap-3'>
-                        <div className='w-8 h-8'>
+                        <div className='w-12 h-12'>
                           <Image
                             src={user.image}
-                            width={34}
-                            height={34}
-                            className='rounded-full'
+                            width={48}
+                            height={48}
+                            className='rounded-full cursor-pointer'
                             alt='user profile'
                             layout='responsive'
                           />
                         </div>
-                        <div className='hidden xl:block'>
+                        <div className='cursor-pointer'>
                           <p className='flex gap-1 items-center text-md font-bold text-primary lowercase'>
                             {user.userName.replaceAll(' ', '')}
                             <GoVerified className='text-blue-400' />
