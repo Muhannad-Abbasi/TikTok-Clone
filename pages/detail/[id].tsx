@@ -57,7 +57,7 @@ const Detail = ({ postDetails }: IProps) => {
     }
   }
 
-  const addComment =async (e: any) => {
+  const addComment = async (e: any) => {
     e.preventDefault();
 
     if(userProfile && comment) {
@@ -148,7 +148,7 @@ const Detail = ({ postDetails }: IProps) => {
                       className='text-blue-400 text-md'
                     />
                   </p>
-                  <p className='capitalize font-medium text-xs text-gray-500 hidden md:block'>
+                  <p className='capitalize font-medium text-xs text-gray-500 md:block'>
                     {post.postedBy.userName}
                   </p>
                 </div>
