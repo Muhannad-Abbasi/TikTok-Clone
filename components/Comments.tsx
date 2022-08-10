@@ -36,25 +36,31 @@ const Comments = ({ comment, setComment, addComment, comments, isPostingComment 
             <>
               {allUsers.map((user: IUser) => (
                 user._id === (item.postedBy._id || item.postedBy._ref) && (
-                  <div
-                    className='p-2 items-center'
-                    key={idx}
-                  >
-                    <Link
-                      href={`/profile/${user._id}`}
+                  <>
+                    <div
+                      className='p-2 items-center flex gap-3'
+                      key={idx}
                     >
-                      <div className='flex items-start gap-3'>
-                        <div className='w-12 h-12'>
-                          <Image
-                            src={user.image}
-                            width={48}
-                            height={48}
-                            className='rounded-full cursor-pointer'
-                            alt='user profile'
-                            layout='responsive'
-                          />
+                      <Link
+                        href={`/profile/${user._id}`}
+                      >
+                        <div className='flex items-start gap-3'>
+                          <div className='w-12 h-12'>
+                            <Image
+                              src={user.image}
+                              width={48}
+                              height={48}
+                              className='rounded-full cursor-pointer'
+                              alt='user profile'
+                              layout='responsive'
+                            />
+                          </div>
                         </div>
-                        <div className='cursor-pointer'>
+                      </Link>
+                      <Link 
+                        href={`/profile/${user._id}`}
+                      >
+                        <div className='cursor-pointer items-center justify-center'>
                           <p className='flex gap-1 items-center text-md font-bold text-primary lowercase'>
                             {user.userName.replaceAll(' ', '')}
                             <GoVerified className='text-blue-400' />
@@ -63,14 +69,14 @@ const Comments = ({ comment, setComment, addComment, comments, isPostingComment 
                             {user.userName}
                           </p>
                         </div>
-                      </div>
-                    </Link>
-                    <div>
+                      </Link>
+                    </div>
+                    <div className='ml-[4.3rem]'>
                       <p>
                         {item.comment}
                       </p>
                     </div>
-                  </div>
+                  </>
                 )
               ))}
             </>
