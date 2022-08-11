@@ -7,6 +7,11 @@ import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import { BsFillPlayFill, BsFillPauseFill, BsPlay } from 'react-icons/bs';
 import { GoVerified } from 'react-icons/go';
 
+import useAuthStore from '../store/authStore';
+import LikeButton from '../components/LikeButton';
+import { BASE_URL } from '../utils';
+import axios from 'axios';
+
 interface Iprops {
   post: Video;
 }
@@ -16,6 +21,21 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
   const [playing, setPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const [likedPost, setLikedPost] = useState(post);
+  const { userProfile }: any = useAuthStore();
+
+  const handleLike =async (like: boolean) => {
+    if(userProfile) {
+      const { data } = await axios.put(`${BASE_URL}/api/like`, {
+        userId: userProfile._id,
+        postId: likedPost._id,
+        like
+      })
+
+      setLikedPost({ ...likedPost, likes: data.likes })
+    }
+  }
 
   const onVideoPress = () => {
     if(playing) {
@@ -113,6 +133,16 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
           )}
         </div>
         
+        <div className='mt-10 px-10'>
+          {userProfile && (
+            <LikeButton
+              flex='flex'
+              likes={likedPost?.likes}
+              handleLike={() => handleLike(true)}
+              handleDislike={() => handleLike(false)}
+            />
+          )}
+        </div>
       </div>
     </div>
   )
