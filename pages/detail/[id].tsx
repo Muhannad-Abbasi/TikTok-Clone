@@ -12,6 +12,7 @@ import { Video } from '../../types';
 import useAuthStore from '../../store/authStore';
 import LikeButton from '../../components/LikeButton';
 import Comments from '../../components/Comments';
+import CommentsButton from '../../components/CommentsButton';
 
 interface IProps {
   postDetails: Video
@@ -77,8 +78,8 @@ const Detail = ({ postDetails }: IProps) => {
   if(!post) return null;
 
   return (
-    <div className='flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap'>
-      <div className='relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-black bg-no-repeat bg-cover bg-center'>
+    <div className='flex w-[100vw] absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap'>
+      <div className='relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-black bg-no-repeat bg-cover bg-center md:w-[100%]'>
         <div className='absolute top-6 left-2 lg:left-6 flex gap-6 z-50'>
           <p
             className='cursor-pointer'
@@ -122,7 +123,7 @@ const Detail = ({ postDetails }: IProps) => {
         </div>
       </div>
 
-      <div className='relative w-[1000px] md:w-[900px] lg:w-[700px]'>
+      <div className='relative w-[1000px] md:w-[100%] lg:w-[700px]'>
         <div className='lg:mt-5 mt-5'>
           
           <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
@@ -158,14 +159,21 @@ const Detail = ({ postDetails }: IProps) => {
           
           <p className='px-10 text-md text-gray-600'>{post.caption}</p>
 
-          <div className='mt-10 px-10'>
+          <div className='mt-2 px-10 flex gap-3'>
             {userProfile && (
-              <LikeButton
-                flex='flex'
-                likes={post.likes}
-                handleLike={() => handleLike(true)}
-                handleDislike={() => handleLike(false)}
-              />
+              <>
+                <LikeButton
+                  flex='flex'
+                  likes={post.likes}
+                  handleLike={() => handleLike(true)}
+                  handleDislike={() => handleLike(false)}
+                />
+
+                <CommentsButton
+                  comments={post.comments}
+                  flex='flex'
+                />
+              </>
             )}
           </div>
 

@@ -2,7 +2,8 @@ import React, { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
-
+import { MdSend } from 'react-icons/md';
+import CircularProgress from '@mui/material/CircularProgress';
 import useAuthStore from '../store/authStore';
 import NoResults from './NoResults';
 import { IUser } from '../types';
@@ -86,7 +87,7 @@ const Comments = ({ comment, setComment, addComment, comments, isPostingComment 
         )}
       </div>
       {userProfile && (
-        <div className='absolute bottom-0 left-0 pb-6 px-2 md:px-10'>
+        <div className='absolute bottom-0 left-0 pb-6 px-2 md:px-10 w-[100%]'>
           <form 
             onSubmit={addComment}
             className='flex gap-4'
@@ -98,10 +99,19 @@ const Comments = ({ comment, setComment, addComment, comments, isPostingComment 
               className='bg-primary px-6 py-4 text-md font-medium border-2 w-[250px] md:w-[700px] lg:w-[350px] border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 flex-1 rounded-lg'
             />
             <button
-              className='text-md text-gray-400'
+              className='text-md text-gray-400 mr-2 md:mr-0'
               onClick={addComment}
             >
-              {isPostingComment ? 'Commenting...' : 'Comment'}
+              {
+                isPostingComment
+                ? <CircularProgress
+                    sx={{ color: '#F51997'}}
+                    size={25}
+                  />
+                : <MdSend
+                    className='text-[#F51997] text-2xl'
+                  />
+              }
             </button>
           </form>
         </div>

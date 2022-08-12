@@ -11,6 +11,7 @@ import useAuthStore from '../store/authStore';
 import LikeButton from '../components/LikeButton';
 import { BASE_URL } from '../utils';
 import axios from 'axios';
+import CommentsButton from './CommentsButton';
 
 interface Iprops {
   post: Video;
@@ -69,7 +70,7 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
               />
             </Link>
           </div>
-          <div>
+          <div className='flex flex-col justify-center'>
             <Link href={`/profile/${post.postedBy._id}`}>
               <div>
                 <div className='flex items-center gap-2'>
@@ -96,7 +97,7 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        className='lg:ml-20 flex gap-4 relative w-fit'
+        className='md:ml-20 flex gap-4 relative w-fit sm:ml-14'
       >
         <div className='rounded-3xl'>
           <Link href={`/detail/${post._id}`}>
@@ -110,7 +111,7 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
             </video>
           </Link>
           {isHover && (
-            <div className='absolute bottom-6 cursor-pointer left-[3.5rem] md:left-14 lg:left-0 flex gap-10 lg:ml-[15rem] w-[100px] md:w-[50px] lg:w-[600px]'>
+            <div className='absolute bottom-6 cursor-pointer left-[3.5rem] md:left-14 lg:left-0 flex gap-10 lg:ml-[15rem] w-[100px] md:w-[50px] lg:w-[400px]'>
               {playing ? (
                 <button onClick={onVideoPress}>
                   <BsFillPauseFill className='text-black text-2xl lg:text-4xl' />
@@ -133,14 +134,26 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
           )}
         </div>
         
-        <div className='mt-10 px-10'>
+        <div className='px-1 hidden md:block self-center'>
           {userProfile && (
-            <LikeButton
-              flex='flex'
-              likes={likedPost?.likes}
-              handleLike={() => handleLike(true)}
-              handleDislike={() => handleLike(false)}
-            />
+            <>
+              <LikeButton
+                flex='flex'
+                likes={likedPost?.likes}
+                handleLike={() => handleLike(true)}
+                handleDislike={() => handleLike(false)}
+              />
+              <Link
+                href={`/detail/${post._id}`}
+              >
+                <a>
+                  <CommentsButton
+                    flex='flex'
+                    comments={post.comments}
+                  />
+                </a>
+              </Link>
+            </>
           )}
         </div>
       </div>
