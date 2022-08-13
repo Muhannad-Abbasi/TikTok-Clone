@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { MdFavorite } from 'react-icons/md';
-import { NextPage } from 'next';
 import useAuthStore from '../store/authStore';
 
 interface IProps {
@@ -9,8 +8,6 @@ interface IProps {
   likes: any[];
   flex: string;
 }
-
-
 
 const LikeButton = ({ likes, handleLike, handleDislike }: IProps) => {
   const [alreadyLiked, setAlreadyLiked] = useState(false);

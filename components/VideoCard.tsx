@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Video } from '../types';
 import { NextPage } from 'next';
+import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
+import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
+import { GoVerified } from 'react-icons/go';
+import { BASE_URL } from '../utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
-import { BsFillPlayFill, BsFillPauseFill, BsPlay } from 'react-icons/bs';
-import { GoVerified } from 'react-icons/go';
-
 import useAuthStore from '../store/authStore';
 import LikeButton from '../components/LikeButton';
-import { BASE_URL } from '../utils';
 import axios from 'axios';
 import CommentsButton from './CommentsButton';
 
@@ -21,10 +20,11 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
   const [isHover, setIsHover] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   const [likedPost, setLikedPost] = useState(post);
+
   const { userProfile }: any = useAuthStore();
+
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleLike =async (like: boolean) => {
     if(userProfile) {
@@ -33,7 +33,6 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
         postId: likedPost._id,
         like
       })
-
       setLikedPost({ ...likedPost, likes: data.likes })
     }
   }
@@ -149,7 +148,7 @@ const VideoCard: NextPage<Iprops> = ({ post }) => {
                 <a>
                   <CommentsButton
                     flex='flex'
-                    comments={post.comments}
+                    commentsBtn={post.comments}
                   />
                 </a>
               </Link>

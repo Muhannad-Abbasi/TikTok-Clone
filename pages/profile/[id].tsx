@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { GoVerified } from 'react-icons/go';
-import axios from 'axios';
-
-import VideoCard from '../../components/VideoCard';
-import NoResults from '../../components/NoResults';
 import { IUser, Video } from '../../types';
 import { BASE_URL } from '../../utils';
+import { GoVerified } from 'react-icons/go';
+import Image from 'next/image';
+import axios from 'axios';
+import VideoCard from '../../components/VideoCard';
+import NoResults from '../../components/NoResults';
 
 interface IProps {
   data: {

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 
 interface IProps {
-  comments: any[];
+  commentsBtn: any[];
   flex: string;
 }
 
-const CommentsButton = ({ comments }: IProps) => {
-  const commentsCount = comments;
+const CommentsButton = ({ commentsBtn }: IProps) => {
+  const commentsCount = commentsBtn;
   
   return (
     <div className={`flex gap-6`}>

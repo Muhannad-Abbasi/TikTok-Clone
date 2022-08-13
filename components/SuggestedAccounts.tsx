@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
+import { GoVerified } from 'react-icons/go';
+import { IUser } from '../types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { GoVerified } from 'react-icons/go';
-
 import useAuthStore from '../store/authStore';
-import { IUser } from '../types';
 
 const SuggestedAccounts = () => {
   const { fetchAllUsers, allUsers } = useAuthStore();
@@ -12,7 +11,6 @@ const SuggestedAccounts = () => {
   useEffect(() => {
     fetchAllUsers();
   }, [fetchAllUsers]);
-  
 
   return (
     <div className='xl:border-b-2 border-gray-200 pb-4'>

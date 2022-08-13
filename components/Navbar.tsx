@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
-import Image from 'next/image';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
 import { IoMdAdd } from 'react-icons/io';
-import Logo from '../utils/tiktik-logo.png';
 import { createOrGetUser } from '../utils';
+import { IUser } from '../types';
+import Link from 'next/link';
+import Image from 'next/image';
+import Logo from '../utils/tiktik-logo.png';
 import useAuthStore from '../store/authStore';
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');
+  const [user, setUser] = useState<IUser | null>();
 
   const { userProfile, addUser, removeUser } = useAuthStore();
 
@@ -26,6 +28,10 @@ const Navbar = () => {
       router.push(`/search/${searchValue}`)
     }
   };
+
+  useEffect(() => {
+    setUser(userProfile);
+  }, [userProfile]);
 
   return (
     <div className='w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4'>
@@ -50,7 +56,7 @@ const Navbar = () => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             placeholder='Search accounts and videos'
-            className='bg-primary p-3 md:text-md font-medium border-2 border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 w-[300px] md:w-[350px] rounded-full  md:top-0'
+            className='bg-primary p-3 md:text-md font-medium border-2 border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 w-[300px] md:w-[350px] rounded-full md:top-0'
           />
           <button
             onClick={handleSearch}
@@ -62,8 +68,8 @@ const Navbar = () => {
       </div>
 
       <div>
-        {userProfile ? (
-          <div className='flex gap-5 md:gap-10'>
+        {user ? (
+          <div className='flex gap-5 md:gap-3'>
             <Link href='/upload'>
               <button className='border-2 px-2 md:px-4 text-md font-semibold flex items-center gap-2'>
                 <IoMdAdd className='text-xl' />
@@ -71,22 +77,18 @@ const Navbar = () => {
                 <span className='hidden md:block'>Upload</span>
               </button>
             </Link>
-            {userProfile.image && (
-              <Link href='/'>
-                <>
-                  <Image 
-                    width={40}
-                    height={40}
-                    className='rounded-full cursor-pointer '
-                    src={userProfile.image}
-                    alt='profile photo'
-                  />
-                </>
-              </Link>
+            {user.image && (
+              <Image 
+                width={40}
+                height={40}
+                className='rounded-full'
+                src={user.image}
+                alt='profile photo'
+              />
             )}
             <button
               type='button'
-              className='px-2'
+              className='border-2 p-2 rounded-full cursor-pointer outline-none shadow-md'
               onClick={() => {
                 googleLogout();
                 removeUser();

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import { GoVerified } from 'react-icons/go';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { MdOutlineCancel } from 'react-icons/md';
 import { BASE_URL } from '../../utils';
-import axios from 'axios';
 import { Video } from '../../types';
+import Image from 'next/image';
+import Link from 'next/link';
+import axios from 'axios';
 import useAuthStore from '../../store/authStore';
 import LikeButton from '../../components/LikeButton';
 import Comments from '../../components/Comments';
@@ -40,12 +40,6 @@ const Detail = ({ postDetails }: IProps) => {
     }
   };
 
-  useEffect(() => {
-    if(post && videoRef?.current) {
-      videoRef.current.muted = isVideoMuted;
-    }
-  }, [post, isVideoMuted])
-
   const handleLike =async (like: boolean) => {
     if(userProfile) {
       const { data } = await axios.put(`${BASE_URL}/api/like`, {
@@ -58,22 +52,29 @@ const Detail = ({ postDetails }: IProps) => {
     }
   }
 
-  const addComment = async (e: any) => {
+  const addComment = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    if(userProfile && comment) {
-      setIsPostingComment(true);
+    if (userProfile) {
+      if (comment) {
+        setIsPostingComment(true);
+        const res = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+          userId: userProfile._id,
+          comment,
+        });
 
-      const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
-        userId: userProfile._id,
-        comment
-      });
-
-      setPost({ ...post, comments: data.comments });
-      setComment('');
-      setIsPostingComment(false);
+        setPost({ ...post, comments: res.data.comments });
+        setComment('');
+        setIsPostingComment(false);
+      }
     }
   };
+
+  useEffect(() => {
+    if(post && videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [post, isVideoMuted])
 
   if(!post) return null;
 
@@ -96,9 +97,7 @@ const Detail = ({ postDetails }: IProps) => {
               loop
               src={post?.video?.asset.url}
               className=' h-full cursor-pointer'
-            >
-
-            </video>
+            />           
           </div>
           <div className='absolute top-[45%] left-[45%] cursor-pointer'>
             {!isPlaying && (
@@ -125,7 +124,6 @@ const Detail = ({ postDetails }: IProps) => {
 
       <div className='relative w-[1000px] md:w-[100%] lg:w-[700px]'>
         <div className='lg:mt-5 mt-5'>
-          
           <div className='flex gap-3 p-2 cursor-pointer font-semibold rounded'>
             <div className='ml-4 md:w-20 md:h-20 w-16 h-16'>
               <Link href={`/profile/${post.postedBy._id}`}>
@@ -168,9 +166,8 @@ const Detail = ({ postDetails }: IProps) => {
                   handleLike={() => handleLike(true)}
                   handleDislike={() => handleLike(false)}
                 />
-
                 <CommentsButton
-                  comments={post.comments}
+                  commentsBtn={post.comments}
                   flex='flex'
                 />
               </>

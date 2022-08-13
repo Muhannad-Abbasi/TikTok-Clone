@@ -1,15 +1,15 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
 import { MdSend } from 'react-icons/md';
+import { IUser } from '../types';
+import Image from 'next/image';
+import Link from 'next/link';
 import CircularProgress from '@mui/material/CircularProgress';
 import useAuthStore from '../store/authStore';
 import NoResults from './NoResults';
-import { IUser } from '../types';
 
 interface IProps {
-  isPostingComment: Boolean,
+  isPostingComment: Boolean;
   comment: string;
   setComment: Dispatch<SetStateAction<string>>;
   addComment: (e: React.FormEvent) => void;
@@ -17,13 +17,13 @@ interface IProps {
 }
 
 interface IComment {
-  length?: number;
   comment: string;
+  length?: number;
   _key: string;
-  postedBy: {
-    _ref: string;
-    _id: string;
-  }
+  postedBy: { 
+    _ref?: string;
+    _id?: string 
+  };
 }
 
 const Comments = ({ comment, setComment, addComment, comments, isPostingComment }: IProps) => {
