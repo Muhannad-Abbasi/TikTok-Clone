@@ -8,7 +8,7 @@ import { createOrGetUser } from '../utils';
 import { IUser } from '../types';
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from '../utils/tiktik-logo.png';
+import Logo from '../utils/tiktok-logo.png';
 import useAuthStore from '../store/authStore';
 
 const Navbar = () => {
