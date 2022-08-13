@@ -20,7 +20,7 @@ export const topics = [
     icon: <GiCakeSlice />,
   },
   {
-    name: 'dance',
+    name: 'outdoor',
     icon: <GiGalaxy />,
   },
   {
