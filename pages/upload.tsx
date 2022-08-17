@@ -136,15 +136,15 @@ const Upload = () => {
                       loop
                       src={videoAsset?.url}
                     />
-                    <div className=' flex justify-between gap-20'>
-                      <p className='text-lg'>{videoAsset.originalFilename}</p>
-                      <button
+                    <div className=' flex justify-between gap-5'>
+                      <p className='text-sm text-center font-medium'>{`File name: ${videoAsset.originalFilename}`}</p>
+                      {/* <button
                         type='button'
                         className=' rounded-full bg-gray-200 text-red-400 p-2 text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out'
                         onClick={() => setVideoAsset(undefined)}
                       >
                         <MdDelete />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 )}
